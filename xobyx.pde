@@ -40,31 +40,39 @@ void setup() {
   }
   fullScreen();
   frameRate(60);
-  m=1480/5;
+  m=height/5.0;
   cp5 = new ControlP5(this); 
   // sd = cp5.addSlider2D("wave").setPosition(30, 40).setSize(100, 100).setMinMax(20, 10, 100, 100).setValue(50, 50);
   sd1=cp5.addSlider("sliderTicks1")
-    .setPosition(100, 140)
-    .setSize(520, 100)
+    .setPosition(width - 140, 50)
+    .setSize(100, 30)
     .setRange(0, 100)
     .setNumberOfTickMarks(100)
     ;
   sd2=cp5.addSlider("sliderTicks2")
-    .setPosition(100, 340)
-    .setSize(520, 100)
+    .setPosition(width - 140, 150)
+    .setSize(100, 30)
     .setRange(0, height)
     .setNumberOfTickMarks(height);
-    myTextlabelA = cp5.addTextlabel("label") .setText("55555") .setPosition(0,0) .setColorValue(0xff000000) .setFont(createFont("Georgia",120)) ;
+  myTextlabelA = cp5.addTextlabel("label") .setText("55555") .setPosition(0, 0) .setColorValue(0xff000000) .setFont(createFont("Georgia", 30)) ;
 
   smooth();
 }
-
+float c=0;
+float s1=0;
 void draw() {
   //translate(0,-250);
-
+  c=sd1.getValue();
+  s1=sd2.getValue();
   //shearY(.5);
   //shearX(0.1);
+  pushMatrix();
+  translate(width/2, height/2);
+  rotate(radians(s));
+  scale(sin(s1/10),sin(s1/10));
+  translate(-width/2, -height/2);
   drawbackground();
+  popMatrix();
 }
 
 void drawbackground()
@@ -72,11 +80,10 @@ void drawbackground()
   myTextlabelA.setText(str(s));
   pushMatrix();
   fill(#000000);
-  float c=sd1.getValue();
-  float s1=sd2.getValue();
-  
+
+
   fill(colors[0]);
-  shearY(s1*0.05);
+
   rect(0, s, width, m);
   fill(colors[1]);
   rect(0, s+m, width, m);
